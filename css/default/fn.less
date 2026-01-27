@@ -1,0 +1,268 @@
+//out: false
+//param
+@nb: 1500px;
+@up_nb: (@nb + 1);
+@nb2: 1300px;
+@up_nb2: (@nb2 + 1);
+@lg: 1024px;
+@up_lg: (@lg + 1);
+@lg2: 900px;
+@up_lg2: (@lg2 + 1);
+@md: 768px;
+@up_md: (@md + 1);
+@sm: 600px;
+@up_sm: (@sm + 1);
+@mb: 400px;
+@up_mb: (@mb + 1);
+//font
+@font-family: "Noto Sans TC", "Microsoft JhengHei", Arial, sans-serif;
+//fn
+.justify(@text-align-last: left) {
+  text-align: justify;
+  text-justify: inter-ideograph;
+  text-align-last: @text-align-last;
+}
+.br() {
+  border: 1px solid red;
+}
+.clear() {
+  &::after {
+    content: "";
+    display: block;
+    clear: both;
+  }
+}
+.WH(@WH) {
+  width: @WH;
+  height: @WH;
+}
+.lh_fill(@line-height: 1, @H: 0.1em) {
+  line-height: @line-height;
+  &::after {
+    content: "";
+    display: block;
+    height: @H;
+  }
+}
+.template() {
+  opacity: 0;
+  animation: 1s ease forwards;
+  &:not(.active) {
+    display: none;
+  }
+  &.active {
+    animation-name: an_none;
+  }
+}
+.vw0(@attr, @px) {
+  @{attr}: @px;
+  @media (max-width: 1920px) {
+    @{attr}: (100vw * (@px / 1920));
+  }
+}
+.vw(@wW, @attr, @px) {
+  @{attr}: (100vw * (@px / @wW));
+}
+.img_bg(@W, @H) {
+  position: relative;
+  &::before {
+    content: "";
+    display: block;
+    padding-top: (100% * (@H / @W));
+  }
+  > * {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+  }
+}
+.line_clamp(@row) {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: @row;
+  overflow: hidden;
+}
+//
+.room(@val: 0) {
+  position: absolute;
+  top: @val;
+  left: @val;
+  right: @val;
+  bottom: @val;
+}
+.room_f(@val: 0) {
+  position: fixed;
+  top: @val;
+  left: @val;
+  right: @val;
+  bottom: @val;
+}
+//
+.fcc() {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+//vt
+.vt(@align) {
+  > * {
+    vertical-align: @align;
+  }
+  &::after {
+    content: "";
+    display: inline-block;
+    vertical-align: @align;
+    width: 0;
+    height: 100%;
+    font-size: 0;
+  }
+}
+.vtc() {
+  .vt(middle);
+}
+.vtb() {
+  .vt(bottom);
+}
+//plus
+.plus(@WH, @color: #000000) {
+  position: relative;
+  .WH(@WH);
+  &::before, &::after {
+    content: "";
+    position: absolute;
+    top: ~"calc(50% - 1px)";
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: @color;
+    transition: 0.3s ease;
+  }
+  &:not(.active) {
+    &::after {
+      transform: rotate(-90deg);
+    }
+  }
+}
+.plus_color(@color) {
+  &::before, &::after {
+    background-color: @color;
+  }
+}
+.plus_H(@H) {
+  @H2: @H / 2;
+  &::before, &::after {
+    height: @H;
+    top: ~ "calc(50% - @{H2})";
+  }
+}
+//arrow
+.arrow(@WH, @color) {
+  &::after {
+    content: "";
+    display: block;
+    .WH(@WH);
+    border: 2px solid @color;
+    transition: 0.3s ease;
+  }
+}
+.arrow_center() {
+  &::after {
+    margin: 0 auto;
+  }
+}
+.arrow_color(@color) {
+  &::after {
+    border-color: @color;
+  }
+}
+.arrow_size(@WH) {
+  &::after {
+    .WH(@WH);
+  }
+}
+.arrow_T(@WH, @color) {
+  .arrow(@WH, @color);
+  &::after {
+    border-left: none;
+    border-bottom: none;
+    transform-origin: right top;
+    transform: translateX(-50%) rotate(-45deg);
+  }
+}
+.arrow_R(@WH, @color) {
+  .arrow(@WH, @color);
+  &::after {
+    border-left: none;
+    border-bottom: none;
+    transform-origin: right top;
+    transform: translateY(50%) rotate(45deg);
+  }
+}
+.arrow_B(@WH, @color) {
+  .arrow(@WH, @color);
+  &::after {
+    border-top: none;
+    border-right: none;
+    transform-origin: left bottom;
+    transform: translateX(50%) rotate(-45deg);
+  }
+}
+.arrow_L(@WH, @color) {
+  .arrow(@WH, @color);
+  &::after {
+    border-top: none;
+    border-right: none;
+    transform-origin: left bottom;
+    transform: translateY(-50%) rotate(45deg);
+  }
+}
+//三角形
+.trian_init() {
+  .WH(0);
+  border-style: solid;
+}
+.trian_T(@W, @H, @color) {
+  @_W: @W * 0.5;
+  .trian_init();
+  border-width: 0 @_W @H @_W;
+  border-color: transparent transparent @color transparent;
+}
+.trian_R(@W, @H, @color) {
+  @_H: @H * 0.5;
+  .trian_init();
+  border-width: @_H 0 @_H @W;
+  border-color: transparent transparent transparent @color;
+}
+.trian_B(@W, @H, @color) {
+  @_W: @W * 0.5;
+  .trian_init();
+  border-width: @H @_W 0 @_W;
+  border-color: @color transparent transparent transparent;
+}
+.trian_L(@W, @H, @color) {
+  @_H: @H * 0.5;
+  .trian_init();
+  border-width: @_H @W @_H 0;
+  border-color: transparent @color transparent transparent;
+}
+.trian_LT(@W, @H, @color) {
+  .trian_init();
+  border-width: @H @W 0 0;
+  border-color: @color transparent transparent transparent;
+}
+.trian_LB(@W, @H, @color) {
+  .trian_init();
+  border-width: @H 0 0 @W;
+  border-color: transparent transparent transparent @color;
+}
+.trian_RT(@W, @H, @color) {
+  .trian_init();
+  border-width: 0 @W @H 0;
+  border-color: transparent @color transparent transparent;
+}
+.trian_RT(@W, @H, @color) {
+  .trian_init();
+  border-width: 0 0 @H @W;
+  border-color: transparent transparent @color transparent;
+}
