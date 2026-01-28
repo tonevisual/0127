@@ -206,7 +206,7 @@
                 <ul class="kvUl"> 
                   <li>新戶支付、外送  最高<span class="red">12.8</span><span class="little">%</span>回饋</li>
                   <li>購票、影音、旅遊  最高<span class="red">3.8</span><span class="little">%</span>回饋</li>
-                </ul><a class="btn" href="https://www.o-bank.com/ebank/apps/services/www/ibmb/desktopbrowser/default/indexs.html?txn=COA02002&amp;cardtype=2&amp;cardgrade=C&amp;elektype=1&amp;groupno=6666&amp;imageno=MO0000001" target="_blank"> 
+                </ul><a class="btn applyNowA" href="javascript:;"> 
                   <div>立即申辦</div></a>
                 <div class="tips">*新戶係指首次申請成功開立本行存款帳戶</div>
               </div>
@@ -346,7 +346,7 @@
       <footer class="footer"><span>&copy;王道商業銀行版權所有</span><span class="line">|</span><a onclick="window.open('/service/customer?sourceid=CMS&amp;businesstype=Service&amp;pagename=new%20page')"><img class="icon" src="./img/default/footericon.png">聯絡客服</a></footer><a class="goTop" href="javascript:;" onclick="goTop()"> <img src="./images/goTopBtn.svg" alt="goTop"></a>
       <!-- 浮動按鈕-->
       <div class="float_frame hideOn ready">
-        <div class="applyNow"><a href="https://www.o-bank.com/ebank/apps/services/www/ibmb/desktopbrowser/default/indexs.html?txn=COA02002&amp;cardtype=2&amp;cardgrade=C&amp;elektype=1&amp;groupno=6666&amp;imageno=MO0000001" target="_blank"><img src="./images/pic_gif.gif" alt="立即辦卡">
+        <div class="applyNow"><a class="applyNowA" href="javascript:;"><img src="./images/pic_gif.gif" alt="立即辦卡">
             <div class="aText">立即辦卡</div></a></div>
       </div>
       <!-- 彈出視窗*********************************-->
@@ -664,50 +664,28 @@
     <script src="./js/main.js"></script>
     <script src="./js/maintain.js?v=1222"></script>
     <script>
-  popInitObj.open = false;
-  // 1. 【新增邏輯】自動抓取網址參數並更新按鈕連結
-  $(document).ready(function() {
-    var urlParams = new URLSearchParams(window.location.search);
-    var sc = urlParams.get('sourcecode');
-    var cc = urlParams.get('campaigncode');
-
-    if (sc || cc) {
-      // 針對頁面上所有通往申辦頁(indexs.html)的連結進行處理
-      $('a[href*="indexs.html"]').each(function() {
-        var currentHref = $(this).attr('href');
-        
-        // 依照客戶成功案例，將 sourcecode 轉為 official，campaigncode 轉為 campaign
-        if (sc) {
-          currentHref += '&official=' + encodeURIComponent(sc);
-        }
-        if (cc) {
-          currentHref += '&campaign=' + encodeURIComponent(cc);
-        }
-        
-        $(this).attr('href', currentHref);
-      });
-      console.log("行銷參數已動態補入連結");
-    }
-  });
-
-  // 2. 原本的事件追蹤函式 (保持不變)
-  function CodeEvent() {
-    // LINE Tag Code
-    _lt('send', 'cv', { type: 'wdragonsbutton' }, ['d7365175-e4ea-4e62-bbc5-8ad40f180f98']);
-    // Meta Pixel Code
-    fbq('track', 'wdragonsbutton');
-    // Bing Code
-    uet_report_conversion();
-    // Google tag (gtag.js)
-    gtag('event', 'conversion', {
-      'send_to': 'AW-819844655/CAfwCL6fqKwZEK-s94YD'
-    });
-    gtag('event', 'conversion', {
-      'send_to': 'AW-11358972557/LI9nCLnVrKwZEI3VsKgq'
-    });
-  }
-</script>
-   
+      popInitObj.open = false
+      function CodeEvent() {
+        //LINE Tag Code
+        _lt('send', 'cv', { type: 'wdragonsbutton' }, ['d7365175-e4ea-4e62-bbc5-8ad40f180f98']);
+        //Meta Pixel Code
+        fbq('track', 'wdragonsbutton');
+        //Bing Code
+        uet_report_conversion();
+        //Google tag (gtag.js)
+        gtag('event', 'conversion', {
+          'send_to': 'AW-819844655/CAfwCL6fqKwZEK-s94YD'
+        });
+        gtag('event', 'conversion', {
+          'send_to': 'AW-11358972557/LI9nCLnVrKwZEI3VsKgq'
+        });
+      }
+      
+      //立即申辦
+      //https://www.o-bank.com/ebank/apps/services/www/ibmb/desktopbrowser/default/indexs.html?txn=COA02002&cardtype=2&cardgrade=C&elektype=1&groupno=6666&imageno=MO0000001
+      set_attr(".applyNowA", "onclick", "CodeEvent(); RedirectUrl(true,'https://www.o-bank.com/ebank/apps/services/www/ibmb/desktopbrowser/default/indexs.html','txn=COA02002&cardtype=2&cardgrade=C&elektype=1&groupno=6666&imageno=MO0000001','event','no_member'); return false;");
+      
+    </script>
     <!-- font-->
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500&display=swap">
